@@ -6,7 +6,7 @@ const StyledFooter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+
   bottom: 0;
   background: var(--mainColor);
   a {

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const StyledMain = styled.main`
-  background: var(--backgroundColor);
-  height: 100vh;
+  height: 100%;
 `;
 export { StyledMain };

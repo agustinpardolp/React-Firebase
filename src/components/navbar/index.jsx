@@ -9,7 +9,7 @@ const NavbarMenu = ({ location }) => {
 
   return (
     <StyledNav bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand href="#home">{SCREEN_LABELS.navbar.brand}</Navbar.Brand>
+      <Navbar.Brand href="/gallery">{SCREEN_LABELS.navbar.brand}</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -18,6 +18,7 @@ const NavbarMenu = ({ location }) => {
               <Nav.Link
                 active={pathname.includes(label.path)}
                 href={label.path}
+                key={label.name}
               >
                 {label.name}
               </Nav.Link>
