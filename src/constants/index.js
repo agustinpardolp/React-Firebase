@@ -18,9 +18,11 @@ export const SCREEN_LABELS = {
     addNew: "Add new picture",
   },
   modal: {
-    delete: "Are you sure you delete this image?",
+    delete: "Are you sure you want to delete this image?",
     cancel: "Cancel",
     confirm: "Confirm",
+    input: "Add a file...",
+    file: "File",
   },
   footer: {
     copyrigth: "Copyright © 2020 by Agustin Pardo",
@@ -30,6 +32,54 @@ export const NAVBAR_TITLES = [
   { name: "Profile", path: "/profile" },
   { name: "Gallery", path: "/gallery" },
   { name: "Products", path: "/products" },
+];
+
+export const TABLE_HEADER_TITLES = [
+  {
+    id: "1",
+    styles: { fontWeight: "bold" },
+    name: "Number",
+    dataField: "number",
+  },
+  { id: "2", styles: { fontWeight: "bold" }, name: "Name", dataField: "name" },
+  { id: "3", styles: { fontWeight: "bold" }, name: "Date", dataField: "date" },
+  { id: "4", styles: { fontWeight: "bold" }, name: "Sku", dataField: "sku" },
+  {
+    id: "5",
+    styles: { fontWeight: "bold" },
+    name: "Weight",
+    dataField: "weight",
+  },
+  {
+    id: "6",
+    styles: { fontWeight: "bold" },
+    name: "Height",
+    dataField: "height",
+  },
+  {
+    id: "7",
+    styles: { fontWeight: "bold" },
+    name: "Width",
+    dataField: "width",
+  },
+  {
+    id: "8",
+    styles: { fontWeight: "bold" },
+    name: "Origin",
+    dataField: "origin",
+  },
+  {
+    id: "9",
+    styles: { fontWeight: "bold" },
+    name: "Minimum",
+    dataField: "minimum",
+  },
+  {
+    id: "10",
+    styles: { fontWeight: "bold" },
+    name: "Delay",
+    dataField: "delay",
+  },
 ];
 
 export const REQUEST_STATUS = {

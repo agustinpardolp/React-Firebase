@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import { StyledMain } from "./styled-components";
-
 import NavbarMenu from "../../components/navbar";
 import Footer from "../../components/footer";
 import Products from "../Products";

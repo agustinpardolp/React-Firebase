@@ -2,7 +2,13 @@ import styled from "styled-components";
 import { Navbar } from "react-bootstrap";
 
 const StyledNav = styled(Navbar)`
-  height: 5rem;
+  .navbar-brand,
+  .navbar-nav li a {
+    line-height: 5rem;
+    height: 5rem;
+    padding-top: 0;
+  }
+
   font-size: 1.1rem;
   .mr-auto {
     width: 100%;
