@@ -1,6 +1,6 @@
 import React from "react";
 import { StyledCol } from "./styled-components";
-import Button from "../../components/button";
+import Button from "../../components/Button";
 
 const ProfileInfo = () => {
   return (
@@ -29,7 +29,7 @@ const ProfileInfo = () => {
               </li>
             </ul>
           </div>
-          <Button type={"info"} label={"Edit contact"} />
+          <Button variant="info" label="Edit contact" />
         </section>
       </StyledCol>
     </>

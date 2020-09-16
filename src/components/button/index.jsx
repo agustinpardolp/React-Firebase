@@ -1,13 +1,14 @@
 import React from "react";
 import { Button as Btn } from "react-bootstrap";
 
-// StyledButton= styled
-
-const Button = ({ type, label, onClick }) => {
+const Button = ({ icon, type, variant, disabled, label, onClick }) => {
   return (
-    <Btn variant={type} onClick={onClick}>
-      {label}
-    </Btn>
+    <>
+      <Btn type={type} variant={variant} onClick={onClick} disabled={disabled}>
+        {icon ? <span>&#x2B;</span> : null}
+        {label}
+      </Btn>
+    </>
   );
 };
 

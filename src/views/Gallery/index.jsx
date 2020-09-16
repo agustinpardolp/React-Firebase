@@ -1,166 +1,77 @@
-import React from "react";
-import Image from "../../components/image";
-import styled from "styled-components";
-import Button from "../../components/button";
-import Modal from "../../components/modal";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
+import Image from "../../components/Image";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
+import ModalForm from "../../components/ModalForm";
 import { OverlayAnimation } from "../../utils/animations";
+import {
+  StyledContainer,
+  StyledCategoryTittle,
+  StyledGallery,
+} from "./style-components";
 import { useModal } from "../../hooks";
 import { SCREEN_LABELS } from "../../constants";
+import { fetchImageList } from "../../store/actions/galleryActions";
 
-const StyledGallery = styled.section`
-  min-height: 100vh;
-  .galery-image-container {
-    width: 20rem;
-    height: 15rem;
-  }
-  ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 0px;
-    margin: 5px;
-  }
-  li {
-    list-style: none;
-
-    margin: 0.5rem;
-    padding: 0px;
-  }
-`;
-const StyledContainer = styled.div`
-  margin: 3%;
-`;
-
-const StyledCategoryTittle = styled.div`
-  text-decoration: none !important;
-  transition: all 0.5s;
-  position: absolute;
-  color: var(--mainColorFont) !important;
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "1.2rem")};
-  :hover {
-    color: var(--mainColorFont);
-    transition: all 0.4s ease 0s;
-  }
-`;
-
-const Gallery = () => {
+const Gallery = ({ fetchImageList, imagesList, imagesStatus }) => {
   const {
     showModal,
+    fullModal,
     hideModal,
     openModal,
-    fullModal,
     openFullModal,
   } = useModal(false);
+
+  // useEffect(() => {
+  //   fetchImageList();
+  // }, [fetchImageList]);
 
   return (
     <StyledGallery>
       <StyledContainer>
         <Button
-          type="outline-info"
+          variant="outline-info"
           label={"Add new product"}
           onClick={openFullModal}
+          icon={true}
         />
         <ul>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/GPS.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              >
-                <OverlayAnimation>
-                  <StyledCategoryTittle fontSize={"20px"}>
-                    <Button
-                      type="danger"
-                      onClick={() => openModal()}
-                      label={"Delete"}
-                    ></Button>
-                  </StyledCategoryTittle>
-                </OverlayAnimation>
-              </Image>
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/audio.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/securityCamera.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/notebook2.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-                rounded
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/soundbar.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
-
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/tablet.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/termostat.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-                rounded
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/xbox.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/portablebat.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
+          {imagesList && imagesList.length ? (
+            imagesList.map((image) => {
+              return (
+                <li>
+                  <div className="galery-image-container">
+                    <Image
+                      imgLocation={`images/gallery-images/${image.filename}`}
+                      border={"solid 0.5px grey"}
+                      height={"100%"}
+                    >
+                      <OverlayAnimation>
+                        <StyledCategoryTittle fontSize={"20px"}>
+                          <Button
+                            variant="danger"
+                            onClick={() => openModal()}
+                            label={"Delete"}
+                          ></Button>
+                        </StyledCategoryTittle>
+                      </OverlayAnimation>
+                    </Image>
+                  </div>
+                </li>
+              );
+            })
+          ) : (
+            <li>
+              <span>No hay productos disponibles</span>
+            </li>
+          )}
         </ul>
       </StyledContainer>
-      <Modal
+      <ModalForm
         show={fullModal}
-        isFullModal={fullModal}
         onHide={hideModal}
         message={SCREEN_LABELS.gallery.addNew}
       />
@@ -172,4 +83,24 @@ const Gallery = () => {
     </StyledGallery>
   );
 };
-export default Gallery;
+
+export const mapStateToProps = (state) => {
+  const {
+    firestore: {
+      ordered: { images: imagesList },
+    },
+  } = state;
+
+  return {
+    imagesList,
+  };
+};
+
+export const mapDispatchToProps = {
+  fetchImageList,
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect(() => [{ collection: "images" }])
+)(Gallery);

@@ -34,6 +34,8 @@ export const NAVBAR_TITLES = [
   { name: "Products", path: "/products" },
 ];
 
+export const DUMMY_USER_ID = { userId: "1" };
+
 export const TABLE_HEADER_TITLES = [
   {
     id: "1",
