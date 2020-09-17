@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import styled from "styled-components";
 import Input from "../Input";
 import { SCREEN_LABELS } from "../../constants";
-import Button from "../button";
+import Button from "../Button";
 const StyledModal = styled(Modal)`
   h5 {
     color: var(--mainColor);

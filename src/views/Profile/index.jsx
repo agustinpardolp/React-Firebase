@@ -1,7 +1,7 @@
 import React from "react";
 import { StyledInfo, StyledProfile } from "./styled-components";
 import { Row, Col } from "react-bootstrap";
-import Image from "../../components/image";
+import Image from "../../components/Image";
 import ProfileInfo from "./profileInfo";
 
 const Profile = () => {

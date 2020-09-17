@@ -1,6 +1,6 @@
 import React from "react";
 import { StyledCol } from "./styled-components";
-import Button from "../../components/button";
+import Button from "../../components/Button";
 
 const ProfileInfo = () => {
   return (

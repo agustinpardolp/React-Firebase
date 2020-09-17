@@ -1,7 +1,7 @@
 import React from "react";
-import Image from "../../components/image";
+import Image from "../../components/Image";
 import styled from "styled-components";
-import Button from "../../components/button";
+import Button from "../../components/Button";
 import Modal from "../../components/modal";
 import { OverlayAnimation } from "../../utils/animations";
 import { useModal } from "../../hooks";
