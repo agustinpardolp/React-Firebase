@@ -3,7 +3,7 @@ import { REQUEST_STATUS } from "../../../constants";
 
 export const images = (
   state = {
-    data: {},
+    data: [],
     status: REQUEST_STATUS.NOT_LOADED,
     error: "",
   },
@@ -18,6 +18,7 @@ export const images = (
         error: null,
       };
     case types.FETCH_IMAGES_LIST_SUCCESS:
+      console.log("reducer images", data);
       return {
         ...state,
         data: data,

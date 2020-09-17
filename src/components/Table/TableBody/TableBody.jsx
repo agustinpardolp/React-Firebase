@@ -1,52 +1,27 @@
 import React from "react";
 import { uuid } from "uuidv4";
-
 import { withRouter } from "react-router-dom";
+
 import TableRow from "./TableRow";
 
-const TableBody = ({
-  formats,
-  row,
-  DATATYPE,
-  history,
-  hasToolTip,
-  disableLink,
-  callBack,
-  pathTo,
-}) => {
-  const openSelectedRow = (row, pathTo) => {
-    return (
-      pathTo &&
-      history.push(`${pathTo[0]}${row.id}${pathTo[1] ? pathTo[1] : ""}`)
-    );
-  };
-
-  // const nameHandler = (...args) => {
-  //   let datafield = {
-  //     name: "",
-  //     toolTip: false,
-  //   };
-  //   if (args.toString().length > 20) {
-  //     if (args.length > 1) {
-  //       datafield.name = `${args[0]}, ${args[0].substring(0, 20)}...`;
-  //       datafield.toolTip = true;
-  //     } else {
-  //       datafield.name = `${args[0].substring(0, 20)}...`;
-  //       datafield.toolTip = true;
-  //     }
-  //   } else datafield.name = `${args[0]} ${args[1] ? `${args[1]}` : ""}`;
-  //   return datafield;
-  // };
-
+const TableBody = ({ formats, row, DATATYPE }) => {
   const rowDataHandler = (format, row) => {
     let fieldValue = "";
 
+    switch (format.dataField) {
+      case DATATYPE.DATE:
+        fieldValue = new Date(
+          row[format.dataField].seconds * 1000
+        ).toLocaleDateString("en-US");
+        break;
+      default:
+        fieldValue = row[format.dataField];
+        break;
+    }
+
     return (
-      <td
-        key={uuid()}
-        onClick={() => !disableLink && openSelectedRow(row, pathTo)}
-      >
-        <TableRow fieldValue={fieldValue} row={row} hasToolTip={hasToolTip} />
+      <td key={uuid()}>
+        <TableRow fieldValue={fieldValue} row={row} />
       </td>
     );
   };

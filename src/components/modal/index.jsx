@@ -10,7 +10,8 @@ const Modal = ({ show, message, onHide, onConfirm, children, buttonType }) => {
       show={show}
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      className="modal fade"
+      // className="modal fade"
+      backdropClassName="background-ligth"
     >
       <BoostrapModal.Body>
         <h5>{message}</h5>
@@ -19,6 +20,7 @@ const Modal = ({ show, message, onHide, onConfirm, children, buttonType }) => {
       <BoostrapModal.Footer>
         <ButtonGroup
           onCancel={onHide}
+          onConfirm={onConfirm}
           buttonType={"submit"}
           labelCancel={SCREEN_LABELS.modal.cancel}
           labelConfirm={SCREEN_LABELS.modal.confirm}

@@ -10,7 +10,7 @@ export const fetchImageListRequest = () => {
 export const fetchImageListSuccess = (data) => {
   return {
     type: types.FETCH_IMAGES_LIST_SUCCESS,
-    payload: data,
+    payload: { data: data },
   };
 };
 export const fetchImageListFailure = (error) => {
@@ -21,17 +21,19 @@ export const fetchImageListFailure = (error) => {
 };
 export const fetchImageList = () => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    // const firestore = getFirestore();
-    // firestore.collection("images").add();
-    // const firestore = getFirestore();
-    // firestore.collection("images").add({ filename: "photo.jpg" });
-    // dispatch(fetchImageListRequest());
-    // galleryServices
-    //   .fetchImageList()
-    //   .then((data) => {
-    //     dispatch(fetchImageListSuccess(data));
-    //   })
-    //   .catch((error) => dispatch(fetchImageListFailure(error)));
+    const firestore = getFirestore();
+    firestore
+      .collection("images")
+      .get()
+      .then((querySnapshot) => {
+        let imagesArray = [];
+        querySnapshot.forEach(function (doc) {
+          let { url } = doc.data();
+          imagesArray.push({ id: doc.id, url: url });
+        });
+        return dispatch(fetchImageListSuccess(imagesArray));
+      })
+      .catch((error) => dispatch(fetchImageListFailure(error)));
   };
 };
 
@@ -66,39 +68,6 @@ export const saveNewImage = ({ filename }) => (
   getState,
   { getFirebase, getFirestore }
 ) => {
-  debugger;
-  console.log("IMGDATA", filename);
   const storageRef = firebase.storage().ref(`/imageFolder/${filename.name}`);
   storageRef.put(filename);
-  console.log("storage", firebase);
 };
-
-// export const saveNewImageRequest = () => {
-//   return {
-//     type: types.SAVE_NEW_IMAGE_REQUEST,
-//   };
-// };
-// export const saveNewImageSuccess = () => {
-//   debugger;
-//   return {
-//     type: types.SAVE_NEW_IMAGE_SUCCESS,
-//   };
-// };
-// export const saveNewImageFailure = (error) => {
-//   return {
-//     type: types.SAVE_NEW_IMAGE_FAILURE,
-//     payload: error,
-//   };
-// };
-// export const saveNewImage = (imgData) => (
-//   dispatch,
-//   getState,
-//   { getFirebase, getFirestore }
-// ) => {
-//   const firestore = getFirestore();
-//   firestore
-//     .collection("images")
-//     .add(imgData)
-//     .then(() => dispatch(saveNewImageSuccess()))
-//     .catch((error) => dispatch(saveNewImageFailure(error)));
-// };

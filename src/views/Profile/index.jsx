@@ -9,7 +9,7 @@ import Image from "../../components/Image";
 import ProfileInfo from "./profileInfo";
 import { fetchUserById } from "../../store/actions/userActions";
 
-const Profile = ({ users, fetchUserById }) => {
+const Profile = ({ userData, fetchUserById }) => {
   useEffect(() => {
     fetchUserById(DUMMY_USER_ID.userId);
   }, [fetchUserById]);
@@ -26,20 +26,36 @@ const Profile = ({ users, fetchUserById }) => {
             bgCover={true}
           />
           <StyledInfo>
-            {/* <h3>{users[1].name}</h3>
-            <h5>{users[1].role}</h5> */}
+            <h3>
+              {userData.name} {userData.surname}
+            </h3>
+            <h5>{userData.role}</h5>
           </StyledInfo>
         </Col>
-        <ProfileInfo />
+        <ProfileInfo
+          adress={userData.adress}
+          city={userData.city}
+          company={userData.company}
+          email={userData.email}
+          name={userData.name}
+          phone={userData.phone}
+          role={userData.role}
+          skills={userData.skills}
+          state={userData.state}
+          surname={userData.surname}
+        />
       </Row>
     </StyledProfile>
   );
 };
 
 export const mapStateToProps = (state) => {
-  const { firestore } = state;
+  const {
+    profile: { data: userData },
+  } = state;
+
   return {
-    // users,
+    userData,
   };
 };
 

@@ -1,22 +1,12 @@
 import React from "react";
+import { StyledTableHeader } from "../styled-components";
 
 const TableHeader = ({ col }) => {
   return (
-    <>
-      {col.sortable ? (
-        <td key={col.id} style={col.styles} onClick={col.onClick}>
-          {col.name}{" "}
-          <i className="fas fa-sort" aria-hidden="true">
-            ↕
-          </i>
-        </td>
-      ) : (
-        <td key={col.id} style={col.styles}>
-          {" "}
-          {col.name}
-        </td>
-      )}
-    </>
+    <StyledTableHeader key={col.id} style={col.styles}>
+      {" "}
+      {col.name}
+    </StyledTableHeader>
   );
 };
 export default React.memo(TableHeader, (prevProps, nextProps) => {

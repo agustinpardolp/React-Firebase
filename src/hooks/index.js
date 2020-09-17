@@ -3,7 +3,7 @@ import { projectStorage, projectFirestore } from "../config/fireBaseConfig";
 
 export const useModal = (state, trigger, path, history) => {
   let [showModal, setShowModal] = useState(state);
-  let [fullModal, setFullModal] = useState(false);
+  let [modalData, setModalData] = useState("");
 
   useEffect(() => {
     trigger && setShowModal(true);
@@ -11,7 +11,6 @@ export const useModal = (state, trigger, path, history) => {
 
   const hideModal = () => {
     setShowModal(false);
-    setFullModal(false);
   };
   const onConfirmRedirect = () => {
     history.push(path);
@@ -19,21 +18,24 @@ export const useModal = (state, trigger, path, history) => {
   const openModal = () => {
     setShowModal(true);
   };
-  const openFullModal = () => {
-    setFullModal(true);
-  };
+
   const toggleModal = () => {
     setShowModal(!showModal);
   };
 
+  const toggleModalData = (data) => {
+    setModalData(data);
+    setShowModal(!showModal);
+  };
+
   return {
+    modalData,
     showModal,
-    fullModal,
     hideModal,
     onConfirmRedirect,
     openModal,
     toggleModal,
-    openFullModal,
+    toggleModalData,
   };
 };
 
@@ -64,4 +66,16 @@ export const useStorage = (file) => {
   }, [file]);
 
   return { progress, url, error };
+};
+
+export const useDeteleIMage = (imgId) => {
+  useEffect(() => {
+    const storageRef = projectStorage.ref(imgId);
+    const collectionRef = projectFirestore.collection("images");
+    debugger;
+    storageRef.delete(imgId).on("state_changed", (snap) => async () => {
+      await storageRef.getDownloadURL();
+      await collectionRef.doc(imgId).delete();
+    });
+  }, [imgId]);
 };

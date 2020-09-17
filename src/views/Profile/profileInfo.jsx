@@ -2,7 +2,18 @@ import React from "react";
 import { StyledCol } from "./styled-components";
 import Button from "../../components/Button";
 
-const ProfileInfo = () => {
+const ProfileInfo = ({
+  adress,
+  city,
+  company,
+  email,
+
+  phone,
+  role,
+  skills,
+  state,
+  surname,
+}) => {
   return (
     <>
       <StyledCol xs={12} sm={12} md={6} lg={6}>
@@ -13,19 +24,34 @@ const ProfileInfo = () => {
           <div className="personal-info_ul_container">
             <ul>
               <li>
-                <span>Email:</span>agus@hotmail.com
+                <span>Company: </span>
+                {company}
               </li>
               <li>
-                <span>Phone:</span>(+54-453-15478){" "}
+                <span>Role: </span>
+                {role}
               </li>
               <li>
-                <span>Adress:</span> San Martin y Alvarez N 1587
+                <span>Email: </span>
+                {email}
               </li>
               <li>
-                <span>City:</span> La Plata
+                <span>Phone: </span>
+                {phone}{" "}
               </li>
               <li>
-                <span>State:</span>Buenos Aires
+                <span>Adress:</span> {adress}
+              </li>
+              <li>
+                <span>City: </span> {city}
+              </li>
+              <li>
+                <span>State: </span>
+                {state}
+              </li>
+              <li>
+                <span>My skills: </span>
+                {skills}
               </li>
             </ul>
           </div>

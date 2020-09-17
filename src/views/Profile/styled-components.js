@@ -39,8 +39,8 @@ const StyledProfile = styled.div`
     margin-top: 5%;
   }
   .row {
-    height: 100%;
-    width: 100%;
+    width: 80%;
+    height: 65vh;
     border-radius: 5%;
     margin-top: 10%;
     border: solid grey 1px;

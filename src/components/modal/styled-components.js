@@ -6,5 +6,8 @@ const StyledModal = styled(BoostrapModal)`
     color: var(--mainColor);
     padding: 2%;
   }
+  .show {
+    opacity: 0.1 !important;
+  }
 `;
 export { StyledModal };
