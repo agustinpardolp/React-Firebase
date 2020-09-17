@@ -1,175 +1,131 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
 import Image from "../../components/Image";
-import styled from "styled-components";
 import Button from "../../components/Button";
-import Modal from "../../components/modal";
+import Modal from "../../components/Modal";
+import FileInput from "./fileInput";
 import { OverlayAnimation } from "../../utils/animations";
+import {
+  StyledContainer,
+  StyledCategoryTittle,
+  StyledGallery,
+} from "./style-components";
+import { projectStorage, projectFirestore } from "../../config/fireBaseConfig";
 import { useModal } from "../../hooks";
 import { SCREEN_LABELS } from "../../constants";
+import { fetchImageList } from "../../store/actions/galleryActions";
 
-const StyledGallery = styled.section`
-  min-height: 100vh;
-  .galery-image-container {
-    width: 20rem;
-    height: 15rem;
-  }
-  ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 0px;
-    margin: 5px;
-  }
-  li {
-    list-style: none;
+const Gallery = ({ imageList, fetchImageList }) => {
+  const { showModal, hideModal, modalData, toggleModalData } = useModal(false);
+  const [file, setFile] = useState(null);
+  const [errors, setErrors] = useState(null);
 
-    margin: 0.5rem;
-    padding: 0px;
-  }
-`;
-const StyledContainer = styled.div`
-  margin: 3%;
-`;
+  useEffect(() => {
+    fetchImageList();
+  }, [fetchImageList]);
 
-const StyledCategoryTittle = styled.div`
-  text-decoration: none !important;
-  transition: all 0.5s;
-  position: absolute;
-  color: var(--mainColorFont) !important;
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "1.2rem")};
-  :hover {
-    color: var(--mainColorFont);
-    transition: all 0.4s ease 0s;
-  }
-`;
+  const handleFileChange = (e) => {
+    if (e.target.files.length) {
+      let file = e.target.files ? e.target.files[0].type.split("/")[1] : [];
+      let filetypes = new RegExp("/|jpeg|png|/");
+      let isValidtype = filetypes.test(file);
 
-const Gallery = () => {
-  const {
-    showModal,
-    hideModal,
-    openModal,
-    fullModal,
-    openFullModal,
-  } = useModal(false);
+      if (isValidtype) {
+        setFile(
+          e.target.files[0] //guardo valores locales para que se vea el nombre del archivo al cargar
+        );
+        setErrors(null);
+      } else {
+        setErrors(SCREEN_LABELS.gallery.fileError); //en su defecto error
+        setFile(null);
+      }
+    }
+  };
+
+  const handleDeleteImage = useCallback(
+    (imgId) => {
+      const collectionRef = projectFirestore.collection("images");
+      collectionRef.doc(imgId).delete();
+      hideModal();
+    },
+    [hideModal]
+  );
 
   return (
     <StyledGallery>
       <StyledContainer>
-        <Button
-          type="outline-info"
-          label={"Add new product"}
-          onClick={openFullModal}
-        />
+        <FileInput
+          errors={errors}
+          file={file}
+          handleChange={handleFileChange}
+          setFile={setFile}
+        ></FileInput>
         <ul>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/GPS.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              >
-                <OverlayAnimation>
-                  <StyledCategoryTittle fontSize={"20px"}>
-                    <Button
-                      type="danger"
-                      onClick={() => openModal()}
-                      label={"Delete"}
-                    ></Button>
-                  </StyledCategoryTittle>
-                </OverlayAnimation>
-              </Image>
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/audio.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/securityCamera.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/notebook2.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-                rounded
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/soundbar.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
-
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/tablet.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/termostat.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-                rounded
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/xbox.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
-          <li>
-            <div className="galery-image-container">
-              <Image
-                imgLocation="images/gallery-images/portablebat.jpg"
-                border={"solid 0.5px grey"}
-                height={"100%"}
-              />
-            </div>
-          </li>
+          {imageList && imageList.length ? (
+            imageList.map((image) => {
+              return (
+                <>
+                  <li>
+                    {" "}
+                    <div className="galery-image-container">
+                      <Image
+                        imgLocation={image.url}
+                        border={"solid 0.5px grey"}
+                        height={"100%"}
+                      >
+                        <OverlayAnimation>
+                          <StyledCategoryTittle fontSize={"20px"}>
+                            <Button
+                              variant="danger"
+                              onClick={() => toggleModalData(image.id)}
+                              label={"Delete"}
+                            ></Button>
+                          </StyledCategoryTittle>
+                        </OverlayAnimation>
+                      </Image>
+                    </div>
+                  </li>
+                </>
+              );
+            })
+          ) : (
+            <li>
+              <span>{SCREEN_LABELS.gallery.noProd}</span>
+            </li>
+          )}
         </ul>
+        <Modal
+          show={showModal}
+          onHide={hideModal}
+          message={SCREEN_LABELS.modal.delete}
+          data={modalData}
+          onConfirm={() => handleDeleteImage(modalData)}
+        />
       </StyledContainer>
-      <Modal
-        show={fullModal}
-        isFullModal={fullModal}
-        onHide={hideModal}
-        message={SCREEN_LABELS.gallery.addNew}
-      />
-      <Modal
-        show={showModal}
-        onHide={hideModal}
-        message={SCREEN_LABELS.modal.delete}
-      />
     </StyledGallery>
   );
 };
-export default Gallery;
+
+export const mapStateToProps = (state) => {
+  const {
+    // images: { data: imageList },
+    firestore: {
+      ordered: { images: imageList },
+    },
+  } = state;
+  return {
+    imageList,
+  };
+};
+
+export const mapDispatchToProps = {
+  fetchImageList,
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect(() => [{ collection: "images" }])
+)(Gallery);
+// export default connect(mapStateToProps, mapDispatchToProps)(Gallery);

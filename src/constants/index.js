@@ -15,7 +15,9 @@ export const SCREEN_LABELS = {
   },
   gallery: {
     delete: "Delete",
+    fileError: "Error, only JPG o PNG allowed",
     addNew: "Add new picture",
+    noProd: "'Sorry, there are no products in this gallery",
   },
   modal: {
     delete: "Are you sure you want to delete this image?",
@@ -33,6 +35,8 @@ export const NAVBAR_TITLES = [
   { name: "Gallery", path: "/gallery" },
   { name: "Products", path: "/products" },
 ];
+
+export const DUMMY_USER_ID = { userId: "1" };
 
 export const TABLE_HEADER_TITLES = [
   {

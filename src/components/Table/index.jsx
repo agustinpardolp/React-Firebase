@@ -13,18 +13,7 @@ const StyledTable = styled(BoostrapTable)`
 
 const Table = ({ columns, data }) => {
   const DATATYPE = {
-    DATE: "created",
-    NAME: "person_first_name",
-    FULLNAME: "first_name",
-    PERSON_TYPE: "person_type",
-    REQUEST_TYPE: "request_type",
-    STATUS: "status",
-    CLIENT_STATUS: "contacts",
-    ACTION: "is_active",
-    ACTION_TIME: "action_time",
-    SOURCE: "source",
-    REASON: "cancellation_reason",
-    DOWNLOAD_DOC: "doc",
+    DATE: "date",
   };
 
   let formats = [];
@@ -52,14 +41,11 @@ const Table = ({ columns, data }) => {
       return data.map((row) => {
         return (
           <TableBody
-          // key={row.serial || row.id}
-          // formats={formats}
-          // row={row}
-          // DATATYPE={DATATYPE}
-          // hasToolTip={hasToolTip}
-          // disableLink={disableLink}
-          // callBack={callBack}
-          // pathTo={pathTo}
+            key={row.serial || row.id}
+            formats={formats}
+            row={row}
+            DATATYPE={DATATYPE}
+            disableLink={disableLink}
           />
         );
       });

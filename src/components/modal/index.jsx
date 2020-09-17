@@ -1,83 +1,33 @@
 import React from "react";
-import { Modal } from "react-bootstrap";
-import styled from "styled-components";
-import Input from "../Input";
+import { Modal as BoostrapModal } from "react-bootstrap";
 import { SCREEN_LABELS } from "../../constants";
-import Button from "../Button";
-const StyledModal = styled(Modal)`
-  h5 {
-    color: var(--mainColor);
-    padding: 2%;
-  }
-`;
-const StyledButtonContainer = styled.div`
-  width: 100%;
-  & button:first-child {
-    margin-right: 5%;
-  }
-`;
+import { StyledModal } from "./styled-components";
+import ButtonGroup from "../ButtonGroup";
 
-function ModalContainer({
-  show,
-  isFullModal,
-  message,
-  onHide,
-  onConfirm,
-  hideButton,
-  hiddeAllButtons,
-  handleChange,
-}) {
+const Modal = ({ show, message, onHide, onConfirm, children, buttonType }) => {
   return (
     <StyledModal
       show={show}
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      className="modal fade"
+      // className="modal fade"
+      backdropClassName="background-ligth"
     >
-      <Modal.Body>
+      <BoostrapModal.Body>
         <h5>{message}</h5>
-      </Modal.Body>
-      {isFullModal && (
-        <form className="form" onSubmit={() => console.log("hola")}>
-          <div className="form-group">
-            <Input
-              disableLabel={true}
-              className="form-control"
-              id="text"
-              name="text"
-              placeholder={SCREEN_LABELS.modal.input}
-              type="file"
-              // values={values.text}
-              // touched={touched.text}
-              // errors={errors.text}
-              tabIndex="1"
-              handleChange={handleChange}
-              // handleBlur={handleBlur}
-            />
-          </div>
-        </form>
-      )}
-      {hiddeAllButtons ? null : (
-        <Modal.Footer>
-          <StyledButtonContainer>
-            <Button
-              block
-              onClick={onConfirm}
-              color="none"
-              label={SCREEN_LABELS.modal.confirm}
-              type={"outline-danger"}
-            />
-            <Button
-              block
-              onClick={onHide}
-              label={SCREEN_LABELS.modal.cancel}
-              type={"outline-success"}
-            />
-          </StyledButtonContainer>
-        </Modal.Footer>
-      )}
+      </BoostrapModal.Body>
+      {children && children}
+      <BoostrapModal.Footer>
+        <ButtonGroup
+          onCancel={onHide}
+          onConfirm={onConfirm}
+          buttonType={"submit"}
+          labelCancel={SCREEN_LABELS.modal.cancel}
+          labelConfirm={SCREEN_LABELS.modal.confirm}
+        />
+      </BoostrapModal.Footer>
     </StyledModal>
   );
-}
+};
 
-export default React.memo(ModalContainer);
+export default React.memo(Modal);

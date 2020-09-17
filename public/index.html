@@ -27,6 +27,26 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCsJg2DTUhK9JFvhBbmaxi0Z11VOd1PKVg",
+        authDomain: "tecnical-challenge-api.firebaseapp.com",
+        databaseURL: "https://tecnical-challenge-api.firebaseio.com",
+        projectId: "tecnical-challenge-api",
+        storageBucket: "tecnical-challenge-api.appspot.com",
+        messagingSenderId: "1081385704766",
+        appId: "1:1081385704766:web:6519bf09fb0daff2bca06f",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
     <script src="/js/iconmood.js"></script>
     <script src="/js/jquery-3.3.1.slim.min.js"></script>
     <script src="/js/popper.min.js"></script>
