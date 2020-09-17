@@ -16,6 +16,7 @@ import { projectStorage, projectFirestore } from "../../config/fireBaseConfig";
 import { useModal } from "../../hooks";
 import { SCREEN_LABELS } from "../../constants";
 import { fetchImageList } from "../../store/actions/galleryActions";
+import ContentWrapper from "../../components/ContentWrapper";
 
 const Gallery = ({ imageList, fetchImageList }) => {
   const { showModal, hideModal, modalData, toggleModalData } = useModal(false);
@@ -54,57 +55,59 @@ const Gallery = ({ imageList, fetchImageList }) => {
   );
 
   return (
-    <StyledGallery>
-      <StyledContainer>
-        <FileInput
-          errors={errors}
-          file={file}
-          handleChange={handleFileChange}
-          setFile={setFile}
-        ></FileInput>
-        <ul>
-          {imageList && imageList.length ? (
-            imageList.map((image) => {
-              return (
-                <>
-                  <li>
-                    {" "}
-                    <div className="galery-image-container">
-                      <Image
-                        imgLocation={image.url}
-                        border={"solid 0.5px grey"}
-                        height={"100%"}
-                      >
-                        <OverlayAnimation>
-                          <StyledCategoryTittle fontSize={"20px"}>
-                            <Button
-                              variant="danger"
-                              onClick={() => toggleModalData(image.id)}
-                              label={"Delete"}
-                            ></Button>
-                          </StyledCategoryTittle>
-                        </OverlayAnimation>
-                      </Image>
-                    </div>
-                  </li>
-                </>
-              );
-            })
-          ) : (
-            <li>
-              <span>{SCREEN_LABELS.gallery.noProd}</span>
-            </li>
-          )}
-        </ul>
-        <Modal
-          show={showModal}
-          onHide={hideModal}
-          message={SCREEN_LABELS.modal.delete}
-          data={modalData}
-          onConfirm={() => handleDeleteImage(modalData)}
-        />
-      </StyledContainer>
-    </StyledGallery>
+    <ContentWrapper backgroundColor={"var(--backgroundColor)"}>
+      <StyledGallery>
+        <StyledContainer>
+          <FileInput
+            errors={errors}
+            file={file}
+            handleChange={handleFileChange}
+            setFile={setFile}
+          ></FileInput>
+          <ul>
+            {imageList && imageList.length ? (
+              imageList.map((image) => {
+                return (
+                  <>
+                    <li>
+                      {" "}
+                      <div className="galery-image-container">
+                        <Image
+                          imgLocation={image.url}
+                          border={"solid 0.5px grey"}
+                          height={"100%"}
+                        >
+                          <OverlayAnimation>
+                            <StyledCategoryTittle fontSize={"20px"}>
+                              <Button
+                                variant="danger"
+                                onClick={() => toggleModalData(image.id)}
+                                label={"Delete"}
+                              ></Button>
+                            </StyledCategoryTittle>
+                          </OverlayAnimation>
+                        </Image>
+                      </div>
+                    </li>
+                  </>
+                );
+              })
+            ) : (
+              <li>
+                <span>{SCREEN_LABELS.gallery.noProd}</span>
+              </li>
+            )}
+          </ul>
+          <Modal
+            show={showModal}
+            onHide={hideModal}
+            message={SCREEN_LABELS.modal.delete}
+            data={modalData}
+            onConfirm={() => handleDeleteImage(modalData)}
+          />
+        </StyledContainer>
+      </StyledGallery>
+    </ContentWrapper>
   );
 };
 

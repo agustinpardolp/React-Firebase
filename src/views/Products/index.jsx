@@ -4,12 +4,10 @@ import styled from "styled-components";
 import Table from "../../components/Table";
 import { TABLE_HEADER_TITLES } from "../../constants";
 import { fetchProductsList } from "../../store/actions/productsActions";
+import ContentWrapper from "../../components/ContentWrapper";
 
 const StyledProducts = styled.section`
-  min-height: 100vh;
-  margin-left: 2rem;
-  margin-right: 2rem;
-  margin-top: 2rem;
+  padding: 3%;
 `;
 
 const Products = ({ fetchProductsList, productsList }) => {
@@ -17,9 +15,11 @@ const Products = ({ fetchProductsList, productsList }) => {
     fetchProductsList();
   }, [fetchProductsList]);
   return (
-    <StyledProducts>
-      <Table columns={TABLE_HEADER_TITLES} data={productsList}></Table>
-    </StyledProducts>
+    <ContentWrapper backgroundColor={"var(--backgroundColor)"}>
+      <StyledProducts>
+        <Table columns={TABLE_HEADER_TITLES} data={productsList}></Table>
+      </StyledProducts>
+    </ContentWrapper>
   );
 };
 

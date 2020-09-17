@@ -5,6 +5,7 @@ const StyledGallery = styled.section`
   .galery-image-container {
     width: 20rem;
     height: 15rem;
+    background: var(--backgroundLightColor);
   }
   ul {
     display: flex;
@@ -22,7 +23,7 @@ const StyledGallery = styled.section`
   }
 `;
 const StyledContainer = styled.div`
-  margin: 3%;
+  padding: 3%;
 `;
 
 const StyledCategoryTittle = styled.div`
