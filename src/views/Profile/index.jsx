@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
-import { StyledInfo, StyledProfile } from "./styled-components";
+import { StyledProfile } from "./styled-components";
+
+import ContentWrapper from "../../components/ContentWrapper";
 import { DUMMY_USER_ID } from "../../constants";
-import { Row, Col } from "react-bootstrap";
-import Image from "../../components/Image";
+import { Row } from "react-bootstrap";
 import ProfileInfo from "./profileInfo";
+import ProfileAvatar from "./profileAvatar";
 import { fetchUserById } from "../../store/actions/userActions";
 
 const Profile = ({ userData, fetchUserById }) => {
@@ -15,37 +17,25 @@ const Profile = ({ userData, fetchUserById }) => {
   }, [fetchUserById]);
 
   return (
-    <StyledProfile className="container">
-      <Row>
-        <Col sm={12} md={6} lg={6} xs={12} className="profile-col">
-          <Image
-            imgLocation="images/user-images/img_avatar.png"
-            isRounded={true}
-            width="9.75rem"
-            height="9rem"
-            bgCover={true}
+    <ContentWrapper backgroundColor={"var(--backgroundColor)"}>
+      <StyledProfile className="container">
+        <Row>
+          <ProfileAvatar userData={userData} />
+          <ProfileInfo
+            adress={userData.adress}
+            city={userData.city}
+            company={userData.company}
+            email={userData.email}
+            name={userData.name}
+            phone={userData.phone}
+            role={userData.role}
+            skills={userData.skills}
+            state={userData.state}
+            surname={userData.surname}
           />
-          <StyledInfo>
-            <h3>
-              {userData.name} {userData.surname}
-            </h3>
-            <h5>{userData.role}</h5>
-          </StyledInfo>
-        </Col>
-        <ProfileInfo
-          adress={userData.adress}
-          city={userData.city}
-          company={userData.company}
-          email={userData.email}
-          name={userData.name}
-          phone={userData.phone}
-          role={userData.role}
-          skills={userData.skills}
-          state={userData.state}
-          surname={userData.surname}
-        />
-      </Row>
-    </StyledProfile>
+        </Row>
+      </StyledProfile>
+    </ContentWrapper>
   );
 };
 

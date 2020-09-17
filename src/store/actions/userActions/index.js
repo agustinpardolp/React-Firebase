@@ -1,4 +1,5 @@
 import types from "./types";
+import { services } from "../../../services";
 
 export const fetchUserByIdRequest = () => {
   return {
@@ -17,16 +18,10 @@ export const fetchUserByIdFailure = (error) => {
     payload: error,
   };
 };
-export const fetchUserById = (id) => (
-  dispatch,
-  getState,
-  { getFirebase, getFirestore }
-) => {
-  const firestore = getFirestore();
-  firestore
-    .collection("users")
-    .doc(id)
-    .get()
+//action to get user data asynchronously from the database
+export const fetchUserById = (id) => (dispatch) => {
+  services
+    .fetchUserById(id)
     .then((result) => {
       return dispatch(fetchUserByIdSuccess(result.data()));
     })

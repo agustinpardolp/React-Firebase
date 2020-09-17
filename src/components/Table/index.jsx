@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-
+import { v4 as uuidv4 } from "uuid";
 import TableHeader from "./TableHeader/TableHeader";
 import TableBody from "./TableBody/TableBody";
 import { Table as BoostrapTable } from "react-bootstrap";
+import { SCREEN_LABELS } from "../../constants";
 
 const StyledTable = styled(BoostrapTable)`
   tr {
@@ -41,7 +42,7 @@ const Table = ({ columns, data }) => {
       return data.map((row) => {
         return (
           <TableBody
-            key={row.serial || row.id}
+            key={uuidv4()}
             formats={formats}
             row={row}
             DATATYPE={DATATYPE}
@@ -56,7 +57,7 @@ const Table = ({ columns, data }) => {
             align={"center"}
             colSpan={columns && columns.length > 0 ? columns.length : 1}
           >
-            No hay datos disponibles
+            {SCREEN_LABELS.table.noData}
           </td>
         </tr>
       );

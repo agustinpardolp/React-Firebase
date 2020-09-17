@@ -12,13 +12,13 @@ export const images = (
   const { payload: { error, data } = {} } = action;
   switch (action.type) {
     case types.FETCH_IMAGES_LIST_REQUEST:
+      console.log("loading", action.type);
       return {
         ...state,
         status: REQUEST_STATUS.LOADING,
         error: null,
       };
     case types.FETCH_IMAGES_LIST_SUCCESS:
-      console.log("reducer images", data);
       return {
         ...state,
         data: data,

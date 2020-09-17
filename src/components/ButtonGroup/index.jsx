@@ -1,22 +1,15 @@
 import React from "react";
-import styled from "styled-components";
 import Button from "../Button";
+import { StyledButtonContainer } from "./styled-components";
 
-const StyledButtonContainer = styled.div`
-  width: 100%;
-  & button:first-child {
-    margin-right: 5%;
-  }
-`;
-
-function ButtonGroup({
+const ButtonGroup = ({
   onCancel,
   onConfirm,
   buttonType,
   labelCancel,
   labelConfirm,
   disabled,
-}) {
+}) => {
   return (
     <StyledButtonContainer>
       <Button
@@ -36,6 +29,6 @@ function ButtonGroup({
       />
     </StyledButtonContainer>
   );
-}
+};
 
 export default ButtonGroup;

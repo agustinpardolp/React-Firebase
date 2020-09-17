@@ -30,4 +30,4 @@ const NavbarMenu = ({ location }) => {
   );
 };
 
-export default withRouter(NavbarMenu);
+export default withRouter(React.memo(NavbarMenu));

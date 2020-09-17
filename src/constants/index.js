@@ -6,12 +6,17 @@ export const SCREEN_LABELS = {
     products: "Products",
   },
   profile: {
+    personalInfo: "Personal Info",
     name: "Name",
+    role: "Role",
     surname: "Surname",
-    address: "Addres",
+    company: "Company",
+    adress: "Addres",
     phone: "Phone",
+    email: "Email",
     state: "State",
     city: "City",
+    skills: "Skills",
   },
   gallery: {
     delete: "Delete",
@@ -28,6 +33,9 @@ export const SCREEN_LABELS = {
   },
   footer: {
     copyrigth: "Copyright © 2020 by Agustin Pardo",
+  },
+  table: {
+    noData: "No hay datos disponibles",
   },
 };
 export const NAVBAR_TITLES = [

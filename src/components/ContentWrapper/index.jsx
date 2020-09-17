@@ -1,9 +1,6 @@
 import React from "react";
-import styled from "styled-components";
-const StyledContentWrapper = styled.section`
-  min-height: 100vh;
-  background: ${(props) => props.backgroundColor && props.backgroundColor};
-`;
+import { StyledContentWrapper } from "./styled-components";
+
 const ContentWrapper = ({ className, children, backgroundColor }) => {
   return (
     <StyledContentWrapper
