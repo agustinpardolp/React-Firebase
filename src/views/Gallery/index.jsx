@@ -1,10 +1,11 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { compose } from "redux";
-import { firestoreConnect } from "react-redux-firebase";
+import { v4 as uuidv4 } from "uuid";
 import Image from "../../components/Image";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import Spinner from "../../components/Spinner";
+import ContentWrapper from "../../components/ContentWrapper";
 import FileInput from "./fileInput";
 import { OverlayAnimation } from "../../utils/animations";
 import {
@@ -12,21 +13,24 @@ import {
   StyledCategoryTittle,
   StyledGallery,
 } from "./style-components";
-import { projectStorage, projectFirestore } from "../../config/fireBaseConfig";
 import { useModal } from "../../hooks";
-import { SCREEN_LABELS } from "../../constants";
-import { fetchImageList } from "../../store/actions/galleryActions";
+import { SCREEN_LABELS, REQUEST_STATUS } from "../../constants";
+import {
+  fetchImageList,
+  deleteImage,
+} from "../../store/actions/galleryActions";
 
-const Gallery = ({ imageList, fetchImageList }) => {
+const Gallery = ({ imageList, fetchImageList, deleteImage, status }) => {
   const { showModal, hideModal, modalData, toggleModalData } = useModal(false);
   const [file, setFile] = useState(null);
   const [errors, setErrors] = useState(null);
 
   useEffect(() => {
-    fetchImageList();
-  }, [fetchImageList]);
+    fetchImageList(); //get images from firebase
+  }, [fetchImageList, file]);
 
   const handleFileChange = (e) => {
+    //fn to validate file type, and set it locally
     if (e.target.files.length) {
       let file = e.target.files ? e.target.files[0].type.split("/")[1] : [];
       let filetypes = new RegExp("/|jpeg|png|/");
@@ -46,86 +50,86 @@ const Gallery = ({ imageList, fetchImageList }) => {
 
   const handleDeleteImage = useCallback(
     (imgId) => {
-      const collectionRef = projectFirestore.collection("images");
-      collectionRef.doc(imgId).delete();
+      deleteImage(imgId).then(() => {
+        fetchImageList();
+      });
       hideModal();
     },
-    [hideModal]
+    [deleteImage, fetchImageList, hideModal]
   );
 
   return (
-    <StyledGallery>
-      <StyledContainer>
-        <FileInput
-          errors={errors}
-          file={file}
-          handleChange={handleFileChange}
-          setFile={setFile}
-        ></FileInput>
-        <ul>
-          {imageList && imageList.length ? (
-            imageList.map((image) => {
-              return (
-                <>
-                  <li>
-                    {" "}
-                    <div className="galery-image-container">
-                      <Image
-                        imgLocation={image.url}
-                        border={"solid 0.5px grey"}
-                        height={"100%"}
-                      >
-                        <OverlayAnimation>
-                          <StyledCategoryTittle fontSize={"20px"}>
-                            <Button
-                              variant="danger"
-                              onClick={() => toggleModalData(image.id)}
-                              label={"Delete"}
-                            ></Button>
-                          </StyledCategoryTittle>
-                        </OverlayAnimation>
-                      </Image>
-                    </div>
-                  </li>
-                </>
-              );
-            })
+    <ContentWrapper backgroundColor={"var(--backgroundColor)"}>
+      <StyledGallery>
+        <StyledContainer>
+          <FileInput
+            errors={errors}
+            file={file}
+            handleChange={handleFileChange}
+            setFile={setFile}
+          ></FileInput>
+          {status === REQUEST_STATUS.LOADING && !file ? (
+            <Spinner />
           ) : (
-            <li>
-              <span>{SCREEN_LABELS.gallery.noProd}</span>
-            </li>
+            <ul>
+              {imageList && imageList.length ? (
+                imageList.map((image) => {
+                  return (
+                    <li key={uuidv4()}>
+                      {" "}
+                      <div className="galery-image-container">
+                        <Image
+                          imgLocation={image.url}
+                          border={"solid 0.5px grey"}
+                          height={"100%"}
+                        >
+                          <OverlayAnimation>
+                            <StyledCategoryTittle fontSize={"20px"}>
+                              <Button
+                                variant="danger"
+                                onClick={() => toggleModalData(image.id)}
+                                label={"Delete"}
+                              ></Button>
+                            </StyledCategoryTittle>
+                          </OverlayAnimation>
+                        </Image>
+                      </div>
+                    </li>
+                  );
+                })
+              ) : (
+                <li>
+                  <span>{SCREEN_LABELS.gallery.noProd}</span>
+                </li>
+              )}
+            </ul>
           )}
-        </ul>
-        <Modal
-          show={showModal}
-          onHide={hideModal}
-          message={SCREEN_LABELS.modal.delete}
-          data={modalData}
-          onConfirm={() => handleDeleteImage(modalData)}
-        />
-      </StyledContainer>
-    </StyledGallery>
+          <Modal
+            show={showModal}
+            onHide={hideModal}
+            message={SCREEN_LABELS.modal.delete}
+            data={modalData}
+            onConfirm={() => handleDeleteImage(modalData)}
+          />
+        </StyledContainer>
+      </StyledGallery>
+    </ContentWrapper>
   );
 };
 
 export const mapStateToProps = (state) => {
   const {
-    // images: { data: imageList },
-    firestore: {
-      ordered: { images: imageList },
-    },
+    images: { data: imageList, status },
   } = state;
   return {
     imageList,
+    status,
   };
 };
 
 export const mapDispatchToProps = {
   fetchImageList,
+  deleteImage,
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect(() => [{ collection: "images" }])
-)(Gallery);
-// export default connect(mapStateToProps, mapDispatchToProps)(Gallery);
+export default connect(mapStateToProps, mapDispatchToProps)(Gallery);

@@ -6,6 +6,9 @@ const StyledCol = styled(Col)`
   .personal-info_h3_container {
     margin: 5%;
     border-bottom: solid grey 0.5px;
+    h3 {
+      color: var(--buttonUpload);
+    }
   }
   .personal-info_ul_container {
     text-align: justify;
@@ -35,35 +38,35 @@ const StyledCol = styled(Col)`
 
 const StyledProfile = styled.div`
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: end;
   h1 {
     margin-top: 5%;
   }
   .row {
+    background: var(--fontColor);
+    margin: 3%;
     width: 80%;
-    height: 65vh;
-    border-radius: 5%;
-    margin-top: 10%;
-    border: solid grey 1px;
-    background: aliceblue;
-    padding: 1%;
     box-shadow: 0 0 5px;
+    @media ${DEVICES_MAX_WIDTH.tablet} {
+      width: 100%;
+    }
   }
   .profile-col {
     display: grid;
     text-align: center;
     justify-content: center;
-    align-items: flex-start;
-    background: var(--backgroundProfile);
-    border-radius: 21px;
-    padding-top: 5%;
-    h3,
+    border-right: 0.5px solid lightgray;
+    grid-template-rows: 1.1fr 1.2fr;
+    h3 {
+      color: var(--buttonUpload);
+    }
     h5 {
-      color: var(--fontColor);
+      color: var(--mainColor);
     }
     img {
       box-shadow: 0 0 5px;
-    }
-    @media ${DEVICES_MAX_WIDTH.tablet} {
     }
   }
   @media ${DEVICES_MAX_WIDTH.tablet} {

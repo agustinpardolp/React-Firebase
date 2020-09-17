@@ -1,4 +1,5 @@
 import types from "./types";
+import { services } from "../../../services";
 
 export const fetchProductsListRequest = () => {
   return {
@@ -6,7 +7,6 @@ export const fetchProductsListRequest = () => {
   };
 };
 export const fetchProductsListSuccess = (data) => {
-  console.log("action", data);
   return {
     type: types.FETCH_PRODUCTS_LIST_SUCCESS,
     payload: { data: data },
@@ -19,17 +19,15 @@ export const fetchProductsListFailure = (error) => {
   };
 };
 export const fetchProductsList = () => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firestore = getFirestore();
-    firestore
-      .collection("products")
-      .get()
+  return (dispatch) => {
+    dispatch(fetchProductsListRequest());
+    services
+      .fetchProductsList()
       .then((querySnapshot) => {
         let productArray = [];
         querySnapshot.forEach(function (doc) {
           productArray.push(doc.data());
         });
-        console.log("PRODUCTS", productArray);
         return dispatch(fetchProductsListSuccess(productArray));
       })
       .catch((error) => dispatch(fetchProductsListFailure(error)));

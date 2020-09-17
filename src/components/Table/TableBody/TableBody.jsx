@@ -1,5 +1,5 @@
 import React from "react";
-import { uuid } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 import { withRouter } from "react-router-dom";
 
 import TableRow from "./TableRow";
@@ -20,14 +20,14 @@ const TableBody = ({ formats, row, DATATYPE }) => {
     }
 
     return (
-      <td key={uuid()}>
+      <td key={uuidv4()}>
         <TableRow fieldValue={fieldValue} row={row} />
       </td>
     );
   };
 
   return (
-    <tr key={uuid()}>
+    <tr key={uuidv4()}>
       {formats && formats.map((format) => rowDataHandler(format, row))}
     </tr>
   );

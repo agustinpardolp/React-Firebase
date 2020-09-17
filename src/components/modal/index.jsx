@@ -4,13 +4,12 @@ import { SCREEN_LABELS } from "../../constants";
 import { StyledModal } from "./styled-components";
 import ButtonGroup from "../ButtonGroup";
 
-const Modal = ({ show, message, onHide, onConfirm, children, buttonType }) => {
+const Modal = ({ show, message, onHide, onConfirm, children }) => {
   return (
     <StyledModal
       show={show}
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      // className="modal fade"
       backdropClassName="background-ligth"
     >
       <BoostrapModal.Body>
@@ -30,4 +29,6 @@ const Modal = ({ show, message, onHide, onConfirm, children, buttonType }) => {
   );
 };
 
-export default React.memo(Modal);
+export default React.memo(Modal, (prevProps, nextProps) => {
+  return prevProps.show === nextProps.show;
+});

@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 import { useStorage } from "../../hooks";
-import styled from "styled-components";
-
-const StyledUpdloadBar = styled.div`
-  height: 5px;
-  background: var(--backgroundProfile);
-  width: ${(props) => props.width && props.width};
-`;
+import { StyledUpdloadBar } from "./styled-components";
 
 const UploadBar = ({ file, setFile }) => {
   const { progress, url } = useStorage(file);

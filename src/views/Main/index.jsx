@@ -6,6 +6,7 @@ import Footer from "../../components/Footer";
 import Products from "../Products";
 import Gallery from "../Gallery";
 import Profile from "../Profile";
+import ToastNotification from "../../components/ToastNotification";
 
 const Main = () => {
   return (
@@ -18,6 +19,7 @@ const Main = () => {
         <Redirect to="/gallery" />
       </Switch>
       <Footer />
+      <ToastNotification />
     </StyledMain>
   );
 };

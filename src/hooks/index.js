@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { projectStorage, projectFirestore } from "../config/fireBaseConfig";
+import { storage, db } from "../config/fireBaseConfig";
 
+//modal hook. Allows to get all the modal functionality in one function
 export const useModal = (state, trigger, path, history) => {
   let [showModal, setShowModal] = useState(state);
   let [modalData, setModalData] = useState("");
@@ -37,15 +38,15 @@ export const useModal = (state, trigger, path, history) => {
     toggleModalData,
   };
 };
-
+//useStorage hook. Allows to save the image avoiding rendering problems
 export const useStorage = (file) => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const [url, setUrl] = useState(null);
 
   useEffect(() => {
-    const storageRef = projectStorage.ref(file.name);
-    const collectionRef = projectFirestore.collection("images");
+    const storageRef = storage.ref(file.name);
+    const collectionRef = db.collection("images");
     debugger;
     storageRef.put(file).on(
       "state_changed",
@@ -65,16 +66,4 @@ export const useStorage = (file) => {
   }, [file]);
 
   return { progress, url, error };
-};
-
-export const useDeteleIMage = (imgId) => {
-  useEffect(() => {
-    const storageRef = projectStorage.ref(imgId);
-    const collectionRef = projectFirestore.collection("images");
-    debugger;
-    storageRef.delete(imgId).on("state_changed", (snap) => async () => {
-      await storageRef.getDownloadURL();
-      await collectionRef.doc(imgId).delete();
-    });
-  }, [imgId]);
 };

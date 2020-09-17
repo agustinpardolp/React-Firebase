@@ -1,6 +1,5 @@
 import types from "./types";
-import firebase from "firebase";
-import { galleryServices } from "../../../services/galleryServices";
+import { services } from "../../../services";
 
 export const fetchImageListRequest = () => {
   return {
@@ -19,12 +18,12 @@ export const fetchImageListFailure = (error) => {
     payload: error,
   };
 };
+//action to get the image list asynchronously from the database
 export const fetchImageList = () => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firestore = getFirestore();
-    firestore
-      .collection("images")
-      .get()
+  return (dispatch) => {
+    dispatch(fetchImageListRequest());
+    services
+      .fetchImageList()
       .then((querySnapshot) => {
         let imagesArray = [];
         querySnapshot.forEach(function (doc) {
@@ -53,21 +52,13 @@ export const deleteImageFailure = (error) => {
     payload: error,
   };
 };
+//action to delete an image from the database
 export const deleteImage = (imgId) => (dispatch) => {
   dispatch(deleteImageRequest());
-  return galleryServices
+  return services
     .deleteImage(imgId)
     .then((data) => {
       dispatch(deleteImageSuccess(data));
     })
     .catch((error) => dispatch(deleteImageFailure(error)));
-};
-
-export const saveNewImage = ({ filename }) => (
-  dispatch,
-  getState,
-  { getFirebase, getFirestore }
-) => {
-  const storageRef = firebase.storage().ref(`/imageFolder/${filename.name}`);
-  storageRef.put(filename);
 };
