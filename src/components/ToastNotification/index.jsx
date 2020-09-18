@@ -7,8 +7,7 @@ import { SideAnimation } from "../../utils/animations";
 
 const ToastNotification = ({ message, msgType, resetNotification }) => {
   const [isOpen, setIsOpen] = useState(false);
-  debugger;
-  console.log(message, msgType, resetNotification);
+
   useEffect(() => {
     if (message) {
       handlerOpenToast();
@@ -35,7 +34,15 @@ const ToastNotification = ({ message, msgType, resetNotification }) => {
 
   return isOpen
     ? ReactDOM.createPortal(
-        <SideAnimation duration="1.5s" delay="0.3s">
+        <SideAnimation
+          duration="1.5s"
+          delay="0.3s"
+          position="absolute"
+          right="0%"
+          width="15rem"
+          top="2%"
+          height="10%"
+        >
           <StyledNotification className={"alert alert-success"} role="alert">
             {message}
             <button

@@ -15,6 +15,7 @@ import {
 } from "./style-components";
 import { useModal } from "../../hooks";
 import { SCREEN_LABELS, REQUEST_STATUS } from "../../constants";
+/* istanbul ignore next */
 import {
   fetchImageList,
   deleteImage,
@@ -37,12 +38,10 @@ const Gallery = ({ imageList, fetchImageList, deleteImage, status }) => {
       let isValidtype = filetypes.test(file);
 
       if (isValidtype) {
-        setFile(
-          e.target.files[0] //guardo valores locales para que se vea el nombre del archivo al cargar
-        );
+        setFile(e.target.files[0]);
         setErrors(null);
       } else {
-        setErrors(SCREEN_LABELS.gallery.fileError); //en su defecto error
+        setErrors(SCREEN_LABELS.gallery.fileError);
         setFile(null);
       }
     }

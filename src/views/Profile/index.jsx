@@ -9,6 +9,7 @@ import { DUMMY_USER_ID } from "../../constants";
 import { Row } from "react-bootstrap";
 import ProfileInfo from "./profileInfo";
 import ProfileAvatar from "./profileAvatar";
+
 import { fetchUserById } from "../../store/actions/userActions";
 
 const Profile = ({ userData, fetchUserById }) => {

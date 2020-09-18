@@ -26,7 +26,6 @@ const FileInput = ({ errors, file, handleChange, setFile }) => {
         handleChange={handleChange}
         errors={errors && errors}
       />
-      <span>{file && file.name}</span>
       {file && <UploadBar file={file} setFile={setFile} />}
     </StyledFormGroup>
   );
