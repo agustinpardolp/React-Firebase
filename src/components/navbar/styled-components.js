@@ -15,6 +15,11 @@ const StyledNav = styled(Navbar)`
     justify-content: center;
     a {
       margin-right: 5%;
+      color: var(--fontColor);
+      text-decoration: none;
+      &:hover {
+        color: var(--buttonUpload);
+      }
     }
   }
   .dark {
