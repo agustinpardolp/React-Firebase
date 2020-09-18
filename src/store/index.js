@@ -12,7 +12,7 @@ export const store = createStore(
   composeEnhancers(
     applyMiddleware(
       thunk.withExtraArgument({ getFirestore, getFirebase }),
-      toastMiddleware
+      toastMiddleware /*middleware to intercept api response and show a notificacion when an image is deleted*/
     ),
     reduxFirestore(firebase),
     reactReduxFirebase(firebase)

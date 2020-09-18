@@ -9,6 +9,13 @@ export const BaseAnimation = styled.div`
   animation-fill-mode: ${(props) => props.fillMode};
   animation-play-state: ${(props) => props.playState};
   display: ${(props) => props.display};
+  position: ${(props) => props.position && props.position};
+  right: ${(props) => props.right && props.right};
+  top: ${(props) => props.top && props.top};
+  left: ${(props) => props.left && props.left};
+  bottom: ${(props) => props.bottom && props.bottom};
+  width: ${(props) => props.width && props.width};
+  height: ${(props) => props.height && props.height};
 `;
 
 BaseAnimation.defaultProps = {

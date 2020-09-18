@@ -55,7 +55,7 @@ const ProfileInfo = ({
               </li>
             </ul>
           </div>
-          <Button variant="info" label="Edit contact" />
+          <Button variant="info" label="Edit contact" disabled={true} />
         </section>
       </StyledCol>
     </>

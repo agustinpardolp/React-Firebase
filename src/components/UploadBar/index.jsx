@@ -14,7 +14,7 @@ const UploadBar = ({ file, setFile }) => {
   return (
     <StyledUpdloadBar
       className="progress-bar info"
-      width={progress}
+      width={progress / 20}
     ></StyledUpdloadBar>
   );
 };

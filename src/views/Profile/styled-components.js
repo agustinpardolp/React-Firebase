@@ -20,6 +20,7 @@ const StyledCol = styled(Col)`
     li {
       margin: 1%;
       list-style: none;
+      text-align: initial;
     }
     span {
       font-weight: bold;
@@ -68,10 +69,13 @@ const StyledProfile = styled.div`
     img {
       box-shadow: 0 0 5px;
     }
+    @media ${DEVICES_MAX_WIDTH.tablet} {
+      grid-template-rows: 2fr 1.2fr;
+    }
   }
   @media ${DEVICES_MAX_WIDTH.tablet} {
     width: 100%;
-    height: 70vh;
+    height: auto;
     display: flex;
     justify-content: center;
   }
@@ -80,7 +84,7 @@ const StyledProfile = styled.div`
   }
   @media ${DEVICES_MAX_WIDTH.mobileL} {
     width: 100%;
-    height: 70vh;
+    height: auto;
     display: flex;
     justify-content: center;
   }
