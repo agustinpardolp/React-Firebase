@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { StyledNav } from "./styled-components";
 import { Navbar, Nav } from "react-bootstrap";
 import { NAVBAR_TITLES, SCREEN_LABELS } from "../../constants";
@@ -15,13 +15,13 @@ const NavbarMenu = ({ location }) => {
         <Nav className="mr-auto">
           {NAVBAR_TITLES.map((label) => {
             return (
-              <Nav.Link
+              <Link
                 active={pathname.includes(label.path)}
-                href={label.path}
+                to={label.path}
                 key={label.name}
               >
                 {label.name}
-              </Nav.Link>
+              </Link>
             );
           })}
         </Nav>

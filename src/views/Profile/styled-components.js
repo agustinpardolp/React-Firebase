@@ -39,7 +39,6 @@ const StyledCol = styled(Col)`
 
 const StyledProfile = styled.div`
   min-height: 100vh;
-
   display: flex;
   justify-content: center;
   align-items: end;

@@ -7,7 +7,6 @@ import { SideAnimation } from "../../utils/animations";
 
 const ToastNotification = ({ message, msgType, resetNotification }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   useEffect(() => {
     if (message) {
       handlerOpenToast();

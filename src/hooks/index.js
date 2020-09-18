@@ -47,7 +47,6 @@ export const useStorage = (file) => {
   useEffect(() => {
     const storageRef = storage.ref(file.name);
     const collectionRef = db.collection("images");
-
     storageRef.put(file).on(
       "state_changed",
       (snap) => {
