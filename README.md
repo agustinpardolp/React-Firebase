@@ -1,4 +1,4 @@
-## Technical Review - Frontend Developer
+## Simple CRUD connected to the firebase with the following features:
 
 This app is completely based on the ReactJS, React-Redux, Styled Components and Firebase/Firestore to store the information.
 
