@@ -1,6 +1,6 @@
 export const SCREEN_LABELS = {
   navbar: {
-    brand: "Technical Review",
+    brand: "React-Firebase App",
     profile: "Profile",
     gallery: "Gallery",
     products: "Products",
